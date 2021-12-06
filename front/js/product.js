@@ -1,41 +1,68 @@
 //console.log('fichier product.js')
+//localStorage.clear();
+ let clef = localStorage.getItem('selectionCanap'); // lecture de la clef de stockage
+console.log(clef);
+
 
 let infosCart = {
     id:'',
+    name:'',
+    img:'',
     color:'',
-    qty:''
+    qty:'',
+    price:''
 };
+let maSelectionCanaps = [];   // tableau des canaps ajouté au panier
 
+    
 // Ecoute du clic sur bouton "Ajout au panier"
 document.getElementById('addToCart').addEventListener("click" , function(){
     //console.log("clic");
-    infosCart.id = urlID[1];           // ajout id du canap
+
     let infoQty = document.querySelector('#quantity');  // récupération des infos
-    infosCart.qty = infoQty.value;     // ajout qty
-    //console.log(infoQty.value);
     let infoColor = document.querySelector('#colors');
-    infosCart.color = infoColor.value;    // ajout color
-    //console.log(infoColor.value);
+    //console.log(infoQty.value);
 
-    console.log(infosCart)
+    if(infoQty.value != '0' && infoQty.value != '' && infoColor.value != ''){  // verif saisie, pas de chaine vide ou zero
+        // ajout des infos manquantes
+        infosCart.id = urlID[1];           // ajout id du canap
+        infosCart.qty = infoQty.value;     // ajout qty
+        infosCart.color = infoColor.value;    // ajout color
+        //console.log(infoColor.value);
 
+        //console.log(maSelectionCanaps);
+        // lecture/ recup des datas sauvegardés ds localstorage
+        if(localStorage.getItem('selectionCanap') != null){
+            maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
+        }
+        
+        // maj de la selection
+        maSelectionCanaps.push(infosCart);
+        console.log(maSelectionCanaps);
+        // sauvegarde du panier ds le local storage
+        let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+    }
 });
-
-
 
 // récuperation de l'id du canapé dans l'url
 let urlID = location.search.substring().split("=") // urlID[1] : id uniquement
 //console.log(urlID[1])
 
-// Maj des infos de la page product.html
+// Maj des infos de la page product.html + stockage des infos connus dans infosCart ( temporaire avant validation )
 function MajInfosCanap (UnCanap){
     if (UnCanap !== undefined) {    // verification si pas d'informations
         // Maj de l'image
         document.querySelector('.item__img').innerHTML = `<img src="${UnCanap.imageUrl}" alt="${UnCanap.altTxt}">`;
+        infosCart.img = UnCanap.imageUrl;
+        //console.log(infosCart.img);
         // Maj du titre
         document.getElementById('title').innerHTML = `<p>${UnCanap.name}</p>`;
+        infosCart.name = UnCanap.name;
+        //console.log(infosCart.name);
         // MAj du prix
         document.getElementById('price').innerHTML =  `${UnCanap.price} `;
+        infosCart.price = UnCanap.price;
+        //console.log(infosCart.price);
         //Maj de la description
         document.getElementById('description').innerHTML =  `${UnCanap.description} `;
         // Maj de la liste des couleurs
@@ -43,7 +70,7 @@ function MajInfosCanap (UnCanap){
             document.getElementById('colors').innerHTML +=  `<option value="${UneCouleur}">${UneCouleur}</option>`;
         }
         // Maj de nb d'articles ( qty = 1 par defaut )
-        document.getElementById('description').innerHTML =  `${UnCanap.description} `;
+        //document.getElementById('description').innerHTML =  `${UnCanap.description} `;
     }
 };
 
