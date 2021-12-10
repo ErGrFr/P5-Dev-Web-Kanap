@@ -15,7 +15,7 @@ for (const unCanap of lesCanaps) {
 
 function majUnCanap(leCanap){
 
-    let unCanap = `
+    /*let unCanap = `
             <article class="cart__item" data-id="${leCanap.id}" data-color="${leCanap.color}">
                 <div class="cart__item__img">
                   <img src="${leCanap.img}" alt="${leCanap.alt}">
@@ -36,7 +36,9 @@ function majUnCanap(leCanap){
                     </div>
                   </div>
                 </div>
-            </article>`;
+            </article>`;*/
+
+            
     return unCanap;
 
 }
