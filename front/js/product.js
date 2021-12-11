@@ -36,7 +36,7 @@ document.getElementById('addToCart').addEventListener("click" , function(){
             maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
         }
         // modification du panier
-        let index = RechercheIdCanapLocalstorage(maSelectionCanaps,infosCart.id);
+        let index = RechercheIdCanapLocalstorage(maSelectionCanaps,infosCart.id,infosCart.color);
         if ( index == null){    // si l'id n'existe pas on l'ajoute
             // maj de la selection
             maSelectionCanaps.push(infosCart);
@@ -87,10 +87,10 @@ function MajInfosCanap (UnCanap){
 };
 
 // recherche si le canap existe deja dans le panier, si oui on renvoi l'index du tableau
-function RechercheIdCanapLocalstorage(LesCanaps, IdCanap){
+function RechercheIdCanapLocalstorage(LesCanaps, IdCanap, CouleurCanap){
     let i=0;
     for (UnCanap of LesCanaps) {
-        if(UnCanap.id == IdCanap){
+        if(UnCanap.id == IdCanap && UnCanap.color == CouleurCanap) {
             return i;
         }   
     i++; // index suivant
