@@ -9,7 +9,7 @@ let infosCart = {
     name:'',
     img:'',
     color:'',
-    qty:'',
+    qty:0,
     price:''
 };
 let maSelectionCanaps = [];   // tableau des canaps ajouté au panier
@@ -35,12 +35,24 @@ document.getElementById('addToCart').addEventListener("click" , function(){
         if(localStorage.getItem('selectionCanap') != null){
             maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
         }
+        // modification du panier
+        let index = RechercheIdCanapLocalstorage(maSelectionCanaps,infosCart.id);
+        if ( index == null){    // si l'id n'existe pas on l'ajoute
+            // maj de la selection
+            maSelectionCanaps.push(infosCart);
+            console.log(maSelectionCanaps);
+            // sauvegarde du panier ds le local storage
+            let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+        }else{  
+            //let QtySav =  maSelectionCanaps[index].qty;
+            let QtySav = parseInt(maSelectionCanaps[index].qty);     // si l'id existe deja on update la qty
+            QtySav = QtySav + parseInt(infosCart.qty);
+            maSelectionCanaps[index].qty = QtySav;
+            //console.log(maSelectionCanaps);
+            // sauvegarde du panier ds le local storage
+            let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+        }
         
-        // maj de la selection
-        maSelectionCanaps.push(infosCart);
-        console.log(maSelectionCanaps);
-        // sauvegarde du panier ds le local storage
-        let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
     }
 });
 
@@ -74,6 +86,17 @@ function MajInfosCanap (UnCanap){
     }
 };
 
+// recherche si le canap existe deja dans le panier, si oui on renvoi l'index du tableau
+function RechercheIdCanapLocalstorage(LesCanaps, IdCanap){
+    let i=0;
+    for (UnCanap of LesCanaps) {
+        if(UnCanap.id == IdCanap){
+            return i;
+        }   
+    i++; // index suivant
+    }
+return null;
+}
 
 
 // requete sur le canapé selectionné
