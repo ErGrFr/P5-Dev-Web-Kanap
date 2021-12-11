@@ -4,11 +4,10 @@ console.log('fichier cart.js');
 
 
 // affichage du panier
-let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
+let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
 for (const unCanap of lesCanaps) {
-    let datasHTML = majUnCanap(unCanap);
-    console.log(datasHTML);
-    
+    majUnCanap(unCanap);
+    //console.log(datasHTML);
 }
 
 // affichage un canap du panier
@@ -37,9 +36,41 @@ function majUnCanap(leCanap){
                   </div>
                 </div>
             </article>`;*/
+    // selection du parent
+    const leParent = document.getElementById("cart__items");
+    //console.log(leParent);
+    // chargement template
+    const leTemplate = document.getElementById("template");
+    //console.log(leTemplate);
 
-            
-    return unCanap;
+    // clonage du bloc template
+    //let leClone = leTemplate.cloneNode(true);
+    let leClone = document.importNode(leTemplate.content, true);
+    //console.log(leClone);
+
+    // suppression de la balise template
+
+    // modification des informations ds le clone
+    //clone.getElementsByTagName("img")[0].setAttribute("src","leCanap.img"); // modif de l'image
+    leClone.getElementById("ImgProduit").setAttribute("src",`${leCanap.img}`);
+    leClone.getElementById("ImgProduit").setAttribute("alt",`${leCanap.alt}`);
+    //clone.getElementsByTagName("img").setAttribute("alt","leCanap.alt");
+    //console.log(clone.getElementsByTagName("h2"));
+    //console.log(`${leCanap.name}`);
+    leClone.getElementById("NomProduit").textContent = `${leCanap.name}`;       // modif du nom
+    leClone.getElementById("CouleurProduit").textContent = `${leCanap.color}`;    // modif de la couleur
+    //console.log(leClone);
+    leClone.getElementById("PrixProduit").textContent = `${leCanap.price}`;    // modif du prix
+    leClone.getElementById("QtyProduit").textContent = `${leCanap.qty}`;    // modif de la qté
+    //clone.querySelector(".cart__item__content__settings__quantity p").innerHTML = `Qté : ${leCanap.qty}`;  // modif qty
+    leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
+    // ajout du clone ds html
+    //document.getElementById("cart_items").appendChild(leClone);
+    console.log(leClone);
+    leParent.appendChild(leClone);
+    //console.log(leClone);
+
+    //return unCanap;
 
 }
 
