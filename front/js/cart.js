@@ -14,10 +14,12 @@ let panierTotal = {
 
 // affichage du panier
 let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
-for (const unCanap of lesCanaps) {
-    majUnCanap(unCanap);
+//for (const unCanap of lesCanaps) {
+for(i=0;i<lesCanaps.length;i++){
+    //majUnCanap(unCanap);
+    majUnCanap(lesCanaps[i], i)
     //console.log(datasHTML);
-}
+};
 
 console.log(panierTotal);
 // affichage du prix total du panier et qty total du panier ( le cumul se fait ds la boucle de lecture du localstorage )
@@ -27,7 +29,7 @@ document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
 
 // affichage un canap du panier et renvoi le prix du canap
 
-function majUnCanap(leCanap){
+function majUnCanap(leCanap, indexDataId){
     // selection du parent
     const leParent = document.getElementById("cart__items");
     //console.log(leParent);
@@ -55,32 +57,34 @@ function majUnCanap(leCanap){
     //clone.querySelector(".cart__item__content__settings__quantity p").innerHTML = `Qté : ${leCanap.qty}`;  // modif qty
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
     
-    // ajout du clone ds html
+    // Ajout identification du bouton supprimer ( de 0 a xxx)
+    leClone.querySelector('.deleteItem').setAttribute("data-id", `${indexDataId}`);
+
+    // ajout du clone ds htmls
     //document.getElementById("cart_items").appendChild(leClone);
     //console.log(leClone);
     leParent.appendChild(leClone);
-    //console.log(leClone);
+    console.log(leClone);
 
 }
 
 // ecoute des boutons supprimer
 let boutonsSupprimmer = document.querySelectorAll('.deleteItem');
-console.log(boutonsSupprimmer);
+//console.log(boutonsSupprimmer);
 
-//for(unBouton of boutonsSupprimmer){
-  console.log(boutonsSupprimmer.length);
-for(i=0;i<boutonsSupprimmer.length;i++){
-  boutonsSupprimmer[i].addEventListener("click" , function(){
-    console.log(boutonsSupprimmer[i]);
-    console.log("clic" + i);
+for(unBouton of boutonsSupprimmer){
+    unBouton.addEventListener("click" , function(eventSuppression){
+    //console.log(eventSuppression.target.getAttribute('data-id'));
+    //console.log("clic");
     // suppression du canap correspondant, meme index que les boutons
-    //deleteCanap(boutonsSupprimmer.Nodelist.item);
+    deleteCanap(eventSuppression.target.getAttribute('data-id'));
   });
 };
 
 // suppression d'un canap dans le local storage
 function deleteCanap(index){
-  console.log("suppression canap" + index)
+  console.log("suppression canap" + index);
+  
 };
 
 
