@@ -82,9 +82,15 @@ for(unBouton of boutonsSupprimmer){
 };
 
 // suppression d'un canap dans le local storage
-function deleteCanap(index){
-  console.log("suppression canap" + index);
-  
+function deleteCanap(indexPanier){
+  console.log("suppression canap" + indexPanier);
+  let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+  lesCanaps.splice(indexPanier,1)  // suppression du canap ds le tableau
+  console.log(lesCanaps);
+  let monCart = localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
+  //localStorage.removeItem('selectionCanap'[indexPanier]);
+  window.location.reload();   // re-affichage de la page ( maj)
+
 };
 
 
