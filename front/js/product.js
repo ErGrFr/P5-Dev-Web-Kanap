@@ -3,7 +3,7 @@
  let clef = localStorage.getItem('selectionCanap'); // lecture de la clef de stockage
 console.log(clef);
 
-
+// information a stocker ds le panier
 let infosCart = {
     id:'',
     name:'',
@@ -14,12 +14,13 @@ let infosCart = {
 };
 let maSelectionCanaps = [];   // tableau des canaps ajouté au panier
 
-    
-// Ecoute du clic sur bouton "Ajout au panier"
+//----------------------------------------------------------------
+//---------- Ecoute du clic sur bouton "Ajout au panier" ----------
+//-----------------------------------------------------------------
 document.getElementById('addToCart').addEventListener("click" , function(){
     //console.log("clic");
 
-    let infoQty = document.querySelector('#quantity');  // récupération des infos
+    let infoQty = document.querySelector('#quantity');  // récupération des infos sélectionnées ( qty et couleur )
     let infoColor = document.querySelector('#colors');
     //console.log(infoQty.value);
 
@@ -32,7 +33,8 @@ document.getElementById('addToCart').addEventListener("click" , function(){
 
         //console.log(maSelectionCanaps);
         // lecture/ recup des datas sauvegardés ds localstorage
-        if(localStorage.getItem('selectionCanap') != null){
+        if(localStorage.getItem('selectionCanap') != null){  // si localstorage n'est pas vide
+            // on transforme le contenu 'chaine'( JSON) en 'objet'(JS)
             maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
         }
         // modification du panier
@@ -41,11 +43,11 @@ document.getElementById('addToCart').addEventListener("click" , function(){
             // maj de la selection
             maSelectionCanaps.push(infosCart);
             console.log(maSelectionCanaps);
-            // sauvegarde du panier ds le local storage
+            // sauvegarde du panier ds le local storage ( on transforme l'objet JS en chaine JSON)
             let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
         }else{  
             //let QtySav =  maSelectionCanaps[index].qty;
-            let QtySav = parseInt(maSelectionCanaps[index].qty);     // si l'id existe deja on update la qty
+            let QtySav = parseInt(maSelectionCanaps[index].qty);   // si l'id existe deja on update la qty
             QtySav = QtySav + parseInt(infosCart.qty);
             maSelectionCanaps[index].qty = QtySav;
             //console.log(maSelectionCanaps);
@@ -56,11 +58,13 @@ document.getElementById('addToCart').addEventListener("click" , function(){
     }
 });
 
-// récuperation de l'id du canapé dans l'url
+//------------------------ récuperation de l'id du canapé dans l'url ----------------------------
 let urlID = location.search.substring().split("=") // urlID[1] : id uniquement
 //console.log(urlID[1])
 
+//------------------------------------------------------------------------------------------------------------------
 // Maj des infos de la page product.html + stockage des infos connus dans infosCart ( temporaire avant validation )
+//------------------------------------------------------------------------------------------------------------------
 function MajInfosCanap (UnCanap){
     if (UnCanap !== undefined) {    // verification si pas d'informations
         // Maj de l'image
@@ -86,7 +90,9 @@ function MajInfosCanap (UnCanap){
     }
 };
 
+//-----------------------------------------------------------------------------------------
 // recherche si le canap existe deja dans le panier, si oui on renvoi l'index du tableau
+//-----------------------------------------------------------------------------------------
 function RechercheIdCanapLocalstorage(LesCanaps, IdCanap, CouleurCanap){
     let i=0;
     for (UnCanap of LesCanaps) {
@@ -98,8 +104,9 @@ function RechercheIdCanapLocalstorage(LesCanaps, IdCanap, CouleurCanap){
 return null;
 }
 
-
-// requete sur le canapé selectionné
+//---------------------------------------------------------------
+//------------ requete sur le canapé selectionné ------------------
+//-----------------------------------------------------------------
 
 let url = "http://localhost:3000/api/products/" + urlID[1] // requete API
 

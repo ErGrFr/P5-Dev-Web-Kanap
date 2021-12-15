@@ -1,4 +1,4 @@
-console.log('fichier cart.js');
+//console.log('fichier cart.js');
 //let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
 
 // Total panier
@@ -8,16 +8,14 @@ let panierTotal = {
 }
 
 
-
-
-
-
-// affichage du panier
+//-----------------------------------------------------------------------------
+//-------- affichage du panier ( sauvegardé ds localstorage )--------------------
+//-----------------------------------------------------------------------------
 let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
 //for (const unCanap of lesCanaps) {
-for(i=0;i<lesCanaps.length;i++){
+for(i=0;i<lesCanaps.length;i++){  // l'index i permet aussi d'identifier chaque bouton suppression et input qty
     //majUnCanap(unCanap);
-    majUnCanap(lesCanaps[i], i)
+    majUnCanap(lesCanaps[i], i);
     //console.log(datasHTML);
 };
 
@@ -26,15 +24,13 @@ console.log(panierTotal);
 document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
 document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
 
-
-// affichage un canap du panier et renvoi le prix du canap
-
+// affiche un canap du panier
 function majUnCanap(leCanap, indexDataId){
     // selection du parent
     const leParent = document.getElementById("cart__items");
     //console.log(leParent);
 
-    // chargement template (un bloc temlate a été rajouté ds le html autour de "cart__item")
+    // chargement template (un bloc template a été rajouté ds le html autour de "cart__item")
     const leTemplate = document.getElementById("template");
     //console.log(leTemplate);
 
@@ -62,18 +58,19 @@ function majUnCanap(leCanap, indexDataId){
     // Ajout identification sur input qui modifie la qty
     leClone.querySelector("#QtyProduitInput").setAttribute("data-id", `${indexDataId}`);
 
-    // ajout du clone ds htmls
-    //document.getElementById("cart_items").appendChild(leClone);
-    //console.log(leClone);
-    leParent.appendChild(leClone);
+    // ajout du clone ds html
+    leParent.appendChild(leClone); // ajout sur le parent 
     console.log(leClone);
 
 }
-
-// ecoute des boutons supprimer
+//---------------------------------------------------------------------
+// -----------------  boutons supprimer --------------------------------
+//---------------------------------------------------------------------
+// selection de tous les boutons
 let boutonsSupprimmer = document.querySelectorAll('.deleteItem');
 //console.log(boutonsSupprimmer);
 
+// ecoute de chaque bouton supprimer
 for(unBouton of boutonsSupprimmer){
     unBouton.addEventListener("click" , function(eventSuppression){
     //console.log(eventSuppression.target.getAttribute('data-id'));
@@ -94,29 +91,26 @@ function deleteCanap(indexPanier){
 
 };
 
-
-// ecoute modification qty "input"
+//-------------------------------------------------------------------
+//------------------ modification qty "input" -----------------------
+//--------------------------------------------------------------------
+// selection de tous les input qty
 let lesQtyInput = document.querySelectorAll("#QtyProduitInput");
 console.log(lesQtyInput);
-
+// ecoute de chaque input
 for(unQtyInput of lesQtyInput){
-  unQtyInput.addEventListener("change" , function(eventModificationQty){
-  //console.log(eventSuppression.target.getAttribute('data-id'));
-  //let infosInput = eventModificationQty.target.getAttribute('data-id');
-  //let infosInput = document.querySelector('#QtyProduitInput');
-  //console.log(infosInput);
+  unQtyInput.addEventListener("change" , function(eventModificationQty){  // event sur changement de valeur
   // modification de la qty sur l'article du panier
   modificationQty(eventModificationQty.target.getAttribute('data-id'),eventModificationQty.target.value);
 });
 };
-
+// modification de la qty ds le localstorage
 function modificationQty(indexPanier, newQty){
   console.log("modifQty "+indexPanier+ " " + newQty);
   let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
-  lesCanaps[indexPanier].qty = newQty;  // suppression du canap ds le tableau
+  lesCanaps[indexPanier].qty = newQty;  // modification de la qty
   //console.log(lesCanaps);
   let monCart = localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
-  //localStorage.removeItem('selectionCanap'[indexPanier]);
   window.location.reload();   // re-affichage de la page ( maj)
 }
 
