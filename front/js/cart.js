@@ -59,6 +59,8 @@ function majUnCanap(leCanap, indexDataId){
     
     // Ajout identification du bouton supprimer ( de 0 a xxx)
     leClone.querySelector('.deleteItem').setAttribute("data-id", `${indexDataId}`);
+    // Ajout identification sur input qui modifie la qty
+    leClone.querySelector("#QtyProduitInput").setAttribute("data-id", `${indexDataId}`);
 
     // ajout du clone ds htmls
     //document.getElementById("cart_items").appendChild(leClone);
@@ -75,7 +77,6 @@ let boutonsSupprimmer = document.querySelectorAll('.deleteItem');
 for(unBouton of boutonsSupprimmer){
     unBouton.addEventListener("click" , function(eventSuppression){
     //console.log(eventSuppression.target.getAttribute('data-id'));
-    //console.log("clic");
     // suppression du canap correspondant, meme index que les boutons
     deleteCanap(eventSuppression.target.getAttribute('data-id'));
   });
@@ -92,6 +93,34 @@ function deleteCanap(indexPanier){
   window.location.reload();   // re-affichage de la page ( maj)
 
 };
+
+
+// ecoute modification qty "input"
+let lesQtyInput = document.querySelectorAll("#QtyProduitInput");
+console.log(lesQtyInput);
+
+for(unQtyInput of lesQtyInput){
+  unQtyInput.addEventListener("change" , function(eventModificationQty){
+  //console.log(eventSuppression.target.getAttribute('data-id'));
+  //let infosInput = eventModificationQty.target.getAttribute('data-id');
+  //let infosInput = document.querySelector('#QtyProduitInput');
+  //console.log(infosInput);
+  // modification de la qty sur l'article du panier
+  modificationQty(eventModificationQty.target.getAttribute('data-id'),eventModificationQty.target.value);
+});
+};
+
+function modificationQty(indexPanier, newQty){
+  console.log("modifQty "+indexPanier+ " " + newQty);
+  let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+  lesCanaps[indexPanier].qty = newQty;  // suppression du canap ds le tableau
+  //console.log(lesCanaps);
+  let monCart = localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
+  //localStorage.removeItem('selectionCanap'[indexPanier]);
+  window.location.reload();   // re-affichage de la page ( maj)
+}
+
+
 
 
 // requete de la commande
