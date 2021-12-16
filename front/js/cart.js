@@ -45,7 +45,7 @@ for(unBouton of boutonsSupprimmer){
 //------------------ modification qty "input" -----------------------
 //--------------------------------------------------------------------
 // selection de tous les input qty
-let lesQtyInput = document.querySelectorAll("#QtyProduitInput");
+let lesQtyInput = document.querySelectorAll('.itemQuantity');
 console.log(lesQtyInput);
 // ecoute de chaque input
 for(unQtyInput of lesQtyInput){

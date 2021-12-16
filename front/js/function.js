@@ -32,12 +32,11 @@ function majUnCanap(leCanap, indexDataId){
     panierTotal.prixTotal += parseInt(`${leCanap.price}`) * parseInt(`${leCanap.qty}`);   //  recalcul du prix panier
     //clone.querySelector(".cart__item__content__settings__quantity p").innerHTML = `Qté : ${leCanap.qty}`;  // modif qty
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
-    replaceIdByClass(leClone,'QtyProduitInput','QtyProduitInput');
-    
+    leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
     // Ajout identification du bouton supprimer ( de 0 a xxx)
     leClone.querySelector('.deleteItem').setAttribute("data-id", `${indexDataId}`);
     // Ajout identification sur input qui modifie la qty
-    leClone.querySelector('.QtyProduitInput').setAttribute("data-id", `${indexDataId}`);
+    leClone.querySelector('.itemQuantity').setAttribute("data-id", `${indexDataId}`);
 
     // ajout du clone ds html
     leParent.appendChild(leClone); // ajout sur le parent 
