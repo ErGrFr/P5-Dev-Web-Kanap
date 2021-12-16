@@ -1,7 +1,7 @@
 //console.log('fichier script.js')
 
 
-let url = "http://localhost:3000/api/products"  // requete API
+let url = "http://localhost:3000/api/products"  // requete API : GET par defaut
 
 // ecoute du clic sur canap sélectionne
 //document.querySelector("#").addEventListener('',function(){
@@ -39,17 +39,6 @@ fetch(url)
             </a>`;
             // ajout enfant
             //items.appendChild(articleHTML);
-
-            /*let items = document.getElementById('items');
-            let a = document.createElement("a");
-            a.innerText(`<article>
-            <img src="${unCanap.imageUrl}" alt="${unCanap.altTxt}">
-            <h3 class="productName">${unCanap.name}</h3>
-            <p class="productDescription">${unCanap.description}</p>
-            </article>`);
-            console.log(a);
-            liste.appendChild(articleHTML);*/
-
             document.getElementById('items').innerHTML += articleHTML; // ajoute chaque article ds le doc HTML
         }
         
