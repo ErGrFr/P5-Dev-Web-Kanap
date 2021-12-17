@@ -13,17 +13,22 @@ function majUnCanap(leCanap, indexDataId){
 
     // modification des informations ds le clone
     leClone.getElementById("ImgProduit").setAttribute("src",`${leCanap.img}`);  // modif de l'image
-    leClone.getElementById("ImgProduit").setAttribute("alt",`${leCanap.alt}`);                
+    leClone.getElementById("ImgProduit").setAttribute("alt",`${leCanap.imgalt}`);                
     replaceIdByClass(leClone,'ImgProduit','ImgProduit');                        //un id doit etre unique
     leClone.getElementById("NomProduit").textContent = `${leCanap.name}`;       // modif du nom
     replaceIdByClass(leClone,'NomProduit','NomProduit');
     leClone.getElementById("CouleurProduit").textContent = `Couleur : ${leCanap.color}`;    // modif de la couleur
     replaceIdByClass(leClone,'CouleurProduit','CouleurProduit');
+    
+
     leClone.getElementById("QtyProduit").textContent = `qté : ${leCanap.qty}`;    // modif de la qté
+    // transforme <p> en <label>
+    // a faire ici --------------------------------------------
     replaceIdByClass(leClone,'QtyProduit','QtyProduit');
     leClone.getElementById("PrixProduit").textContent = `Prix : ${leCanap.price} €`;    // modif du prix
     replaceIdByClass(leClone,'PrixProduit','PrixProduit');
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
+    leClone.getElementById("QtyProduitInput").setAttribute("label","QtyProduit");  // ajout du label ds input
     leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
     
     // Ajout identification de l'article complet

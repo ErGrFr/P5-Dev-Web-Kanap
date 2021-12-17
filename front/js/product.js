@@ -8,6 +8,7 @@ let infosCart = {
     id:'',
     name:'',
     img:'',
+    imgalt:'',
     color:'',
     qty:0,
     price:''
@@ -36,6 +37,7 @@ document.getElementById('addToCart').addEventListener("click" , function(){
         if(localStorage.getItem('selectionCanap') != null){  // si localstorage n'est pas vide
             // on transforme le contenu 'chaine'( JSON) en 'objet'(JS)
             maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
+            //maSelectionCanaps = sauvegardeDansLocalstorage();
         }
         // modification du panier
         let index = RechercheIdCanapLocalstorage(maSelectionCanaps,infosCart.id,infosCart.color);
@@ -44,7 +46,8 @@ document.getElementById('addToCart').addEventListener("click" , function(){
             maSelectionCanaps.push(infosCart);
             console.log(maSelectionCanaps);
             // sauvegarde du panier ds le local storage ( on transforme l'objet JS en chaine JSON)
-            let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+            //let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+            sauvegardeDansLocalstorage(maSelectionCanaps);
         }else{  
             //let QtySav =  maSelectionCanaps[index].qty;
             let QtySav = parseInt(maSelectionCanaps[index].qty);   // si l'id existe deja on update la qty
@@ -52,7 +55,8 @@ document.getElementById('addToCart').addEventListener("click" , function(){
             maSelectionCanaps[index].qty = QtySav;
             //console.log(maSelectionCanaps);
             // sauvegarde du panier ds le local storage
-            let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+            //localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
+            sauvegardeDansLocalstorage(maSelectionCanaps);
         }
         
     }
@@ -70,23 +74,19 @@ function MajInfosCanap (UnCanap){
         // Maj de l'image
         document.querySelector('.item__img').innerHTML = `<img src="${UnCanap.imageUrl}" alt="${UnCanap.altTxt}">`;
         infosCart.img = UnCanap.imageUrl;
-        //console.log(infosCart.img);
+        infosCart.imgalt = UnCanap.altTxt;
         // Maj du titre
         document.getElementById('title').innerHTML = `<p>${UnCanap.name}</p>`;
         infosCart.name = UnCanap.name;
-        //console.log(infosCart.name);
         // MAj du prix
         document.getElementById('price').innerHTML =  `${UnCanap.price} `;
         infosCart.price = UnCanap.price;
-        //console.log(infosCart.price);
         //Maj de la description
         document.getElementById('description').innerHTML =  `${UnCanap.description} `;
         // Maj de la liste des couleurs
         for (const UneCouleur of UnCanap.colors) {
             document.getElementById('colors').innerHTML +=  `<option value="${UneCouleur}">${UneCouleur}</option>`;
         }
-        // Maj de nb d'articles ( qty = 1 par defaut )
-        //document.getElementById('description').innerHTML =  `${UnCanap.description} `;
     }
 };
 
