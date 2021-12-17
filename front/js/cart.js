@@ -18,11 +18,11 @@ for(i=0;i<lesCanaps.length;i++){  // l'index i permet aussi d'identifier chaque 
     majUnCanap(lesCanaps[i], i);
     //console.log(datasHTML);
 };
-
+majInfosTotalPanier();
 console.log(panierTotal);
 // affichage du prix total du panier et qty total du panier ( le cumul se fait ds la boucle de lecture du localstorage )
-document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
-document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
+//document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
+//document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
 
 
 //---------------------------------------------------------------------
@@ -52,7 +52,7 @@ for(unQtyInput of lesQtyInput){
   unQtyInput.addEventListener("change" , function(eventModificationQty){  // event sur changement de valeur
   // modification de la qty sur l'article du panier
   modificationQty(eventModificationQty.target.getAttribute('data-id'),eventModificationQty.target.value);
-});
+  });
 };
 
 
