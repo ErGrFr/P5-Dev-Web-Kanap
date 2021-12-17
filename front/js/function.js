@@ -53,7 +53,6 @@ function deleteCanap(indexPanier){
     // suppression de l'article ds le local storage
     let lesCanaps = lectureLocalstorage();
     lesCanaps.splice(indexPanier,1)  // suppression du canap ds le tableau
-    //localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
     sauvegardeDansLocalstorage(lesCanaps);
     // suppression de l'article dans le html
     let lesArticles = document.querySelectorAll('.cart__item');//.getAttribute("data-id");//setAttribute("data-id",`${indexDataId}`);
@@ -100,11 +99,12 @@ function majInfosTotalPanier(){
     document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
   }
 
+  //-------------------------------- localstorage -------------------------------------------------
   function lectureLocalstorage(){
-      return JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+      return JSON.parse(localStorage.getItem('selectionCanap')); // lecture ds localstorage
   }
 
   function sauvegardeDansLocalstorage(element){
-    localStorage.setItem('selectionCanap',JSON.stringify(element));
+    localStorage.setItem('selectionCanap',JSON.stringify(element));  // ecriture ds localstorage
   }
 

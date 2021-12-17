@@ -54,11 +54,12 @@ h2 {
 
 /*informations*/
 .informations {
-	font-size: 13px;
+	font-size: 20px;
+	font-weight: bold;
 	background-color: var(--main-color);
 }
 .informations img {
-	height: 17px;
+	height: 20px;
 }
 .informations ul {
 	display: flex;
