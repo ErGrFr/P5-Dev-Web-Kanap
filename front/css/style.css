@@ -36,7 +36,7 @@ h2 {
 
 /*Colors*/
 :root {
-	--main-color: #3498db;
+	--main-color: #0d75bb;     /* old #3498db;*/
 	--secondary-color: #2c3e50;
 	--text-color: #3d4c68;
 	--footer-text-color: #a6b0b3; 
@@ -55,7 +55,7 @@ h2 {
 /*informations*/
 .informations {
 	font-size: 20px;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	background-color: var(--main-color);
 }
 .informations img {

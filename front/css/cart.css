@@ -23,6 +23,7 @@ h2 {
 	border-top: 1px solid white;
 	padding-top: 35px;
 	margin-bottom: 30px;
+	/*font-weight: bold;*/
 }
 .cart__item__img {
 	width: 25%;
