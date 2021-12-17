@@ -1,29 +1,12 @@
-//console.log('fichier cart.js');
-//let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
-
-// Total panier
-let panierTotal = {
-  prixTotal: 0,
-  qtyTotal:0,
-}
-
 
 //-----------------------------------------------------------------------------
 //-------- affichage du panier ( sauvegardé ds localstorage )--------------------
 //-----------------------------------------------------------------------------
-let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
-//for (const unCanap of lesCanaps) {
+let lesCanaps = lectureLocalstorage(); // lecture du localstorage
 for(i=0;i<lesCanaps.length;i++){  // l'index i permet aussi d'identifier chaque bouton suppression et input qty
-    //majUnCanap(unCanap);
     majUnCanap(lesCanaps[i], i);
-    //console.log(datasHTML);
-};
+  };
 majInfosTotalPanier();
-console.log(panierTotal);
-// affichage du prix total du panier et qty total du panier ( le cumul se fait ds la boucle de lecture du localstorage )
-//document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
-//document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
-
 
 //---------------------------------------------------------------------
 // -----------------  boutons supprimer --------------------------------

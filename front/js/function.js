@@ -15,20 +15,14 @@ function majUnCanap(leCanap, indexDataId){
     leClone.getElementById("ImgProduit").setAttribute("src",`${leCanap.img}`);  // modif de l'image
     leClone.getElementById("ImgProduit").setAttribute("alt",`${leCanap.alt}`);                
     replaceIdByClass(leClone,'ImgProduit','ImgProduit');                        //un id doit etre unique
-
     leClone.getElementById("NomProduit").textContent = `${leCanap.name}`;       // modif du nom
     replaceIdByClass(leClone,'NomProduit','NomProduit');
     leClone.getElementById("CouleurProduit").textContent = `Couleur : ${leCanap.color}`;    // modif de la couleur
     replaceIdByClass(leClone,'CouleurProduit','CouleurProduit');
-    
-    
     leClone.getElementById("QtyProduit").textContent = `qté : ${leCanap.qty}`;    // modif de la qté
     replaceIdByClass(leClone,'QtyProduit','QtyProduit');
-    //panierTotal.qtyTotal += parseInt(`${leCanap.qty}`);   //  recalcul de la qté panier
     leClone.getElementById("PrixProduit").textContent = `Prix : ${leCanap.price} €`;    // modif du prix
     replaceIdByClass(leClone,'PrixProduit','PrixProduit');
-    //panierTotal.prixTotal += parseInt(`${leCanap.price}`) * parseInt(`${leCanap.qty}`);   //  recalcul du prix panier
-    //clone.querySelector(".cart__item__content__settings__quantity p").innerHTML = `Qté : ${leCanap.qty}`;  // modif qty
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
     leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
     
@@ -57,14 +51,11 @@ function replaceIdByClass(docHtml,theId,theClass){
 // suppression d'un canap dans le local storage et le html
 function deleteCanap(indexPanier){
     // suppression de l'article ds le local storage
-    console.log("suppression canap" + indexPanier);
-    let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+    let lesCanaps = lectureLocalstorage();
     lesCanaps.splice(indexPanier,1)  // suppression du canap ds le tableau
-    //console.log(lesCanaps);
-    let monCart = localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
-    
+    //localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
+    sauvegardeDansLocalstorage(lesCanaps);
     // suppression de l'article dans le html
-    //window.location.reload();   // re-affichage de la page ( maj)
     let lesArticles = document.querySelectorAll('.cart__item');//.getAttribute("data-id");//setAttribute("data-id",`${indexDataId}`);
     for(unArticle of lesArticles){
         if(unArticle.getAttribute('data-id') == indexPanier){ 
@@ -75,14 +66,12 @@ function deleteCanap(indexPanier){
     majInfosTotalPanier();
   };
 
-  // modification de la qty ds le localstorage
+// modification de la qty ds le localstorage
 function modificationQty(indexPanier, newQty){
     console.log("modifQty "+indexPanier+ " " + newQty);
-    let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+    let lesCanaps = lectureLocalstorage();// lecture du localstorage
     lesCanaps[indexPanier].qty = newQty;  // modification de la qty
-    //console.log(lesCanaps);
-    let monCart = localStorage.setItem('selectionCanap',JSON.stringify(lesCanaps)); // re-sauvegarde du panier ds le localstorage
-    //window.location.reload();   // re-affichage de la page ( maj)
+    sauvegardeDansLocalstorage(lesCanaps); // sauvegarde du panier
     // maj affichage qty article
     let panier = document.querySelectorAll('.QtyProduit');
     for(article of panier){
@@ -101,7 +90,7 @@ function majInfosTotalPanier(){
     qtyTotal:0,
     }
 
-    let lesCanaps = JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+    let lesCanaps = lectureLocalstorage();
     for(unCanap of lesCanaps){
         panierTotal.qtyTotal = parseInt(`${unCanap.qty}`);   // pas de cumul sur la qty
         panierTotal.prixTotal += parseInt(`${unCanap.price}`) * panierTotal.qtyTotal;
@@ -110,3 +99,12 @@ function majInfosTotalPanier(){
     document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
     document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
   }
+
+  function lectureLocalstorage(){
+      return JSON.parse(localStorage.getItem('selectionCanap')); // lecture du localstorage
+  }
+
+  function sauvegardeDansLocalstorage(element){
+    localStorage.setItem('selectionCanap',JSON.stringify(element));
+  }
+
