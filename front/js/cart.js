@@ -86,6 +86,8 @@ document.getElementById("order").addEventListener("click" , function(commander){
           .then((maCommande) => {            // promesse datas JSON
             console.log(maCommande);
             //MajInfosCanap(LeCanap);     // Maj infos du canap
+            //method: postMessage,
+
         
           })
           .catch()                        // Gestion des erreurs
