@@ -23,9 +23,16 @@ function majUnCanap(leCanap, indexDataId){
 
     //leClone.getElementById("QtyProduit").textContent = `qté : ${leCanap.qty}`;    // modif de la qté
     // transforme <p> en <label> et lien label
-    leClone.getElementById("QtyProduit").innerHTML = `<label for="itemQuantity${indexDataId}">qté : ${leCanap.qty}</label>`;
+    //leClone.getElementById("QtyProduit").replace('p','label');
+
+    let elm= leClone.getElementById("QtyProduit");
+    console.log(elm.tagName);
+    
+    elm.innerHTML = `<label class="QtyProduit" for="itemQuantity${indexDataId}">qté : ${leCanap.qty}</label>`;
+    console.log(elm);
+    //node.parentNode.removeChild(node);
     // a faire ici --------------------------------------------
-    replaceIdByClass(leClone,'QtyProduit','QtyProduit');
+    //replaceIdByClass(leClone,'QtyProduit','QtyProduit');
 
     leClone.getElementById("PrixProduit").textContent = `Prix : ${leCanap.price} €`;    // modif du prix
     replaceIdByClass(leClone,'PrixProduit','PrixProduit');
