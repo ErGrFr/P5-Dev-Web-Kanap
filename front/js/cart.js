@@ -29,7 +29,7 @@ for(unBouton of boutonsSupprimmer){
 //--------------------------------------------------------------------
 // selection de tous les input qty
 let lesQtyInput = document.querySelectorAll('.itemQuantity');
-console.log(lesQtyInput);
+//console.log(lesQtyInput);
 // ecoute de chaque input
 for(unQtyInput of lesQtyInput){
   unQtyInput.addEventListener("change" , function(eventModificationQty){  // event sur changement de valeur
@@ -52,7 +52,7 @@ for(unQtyInput of lesQtyInput){
   city : '',
   email: ''
 };
-let products = ['']; //<-- array of product _id
+let lesProducts = ['']; //<-- array of product _id
 
 
 
@@ -75,24 +75,29 @@ document.getElementById("order").addEventListener("click" , function(commander){
     saisieFormulaire = false;
   }
 
-  console.log(contact);
+  //console.log(contact);
  
- if (saisieFormulaire === true){  // si tous les champs formulaire sont ok
+  if (saisieFormulaire === true){  // si tous les champs formulaire sont ok
       // soumission de la commande au serveur
       let url = "http://localhost:3000/api/order/"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
-      fetch(url)
-        .then(response =>                   // promesse réponse serveur
-          response.json()
-          .then((maCommande) => {            // promesse datas JSON
-            console.log(maCommande);
-            //MajInfosCanap(LeCanap);     // Maj infos du canap
-            //method: postMessage,
+      fetch(url,{
+        //-------------------------- datas pour le serveur ------------
+        method : 'POST',
+        //headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(contact),
+        //body: contact,lesProducts   // FormData
+        product: JSON.stringify(lesProducts)
+        //--------------------------------------------------------------
+        })
+        .then(response => response.json() // promesse réponse serveur
+              .then((maCommande) => {            // promesse datas JSON
+                console.log(maCommande);
+                //MajInfosCanap(LeCanap);     // Maj infos du canap
 
         
-          })
-          .catch()                        // Gestion des erreurs
+              })
+              .catch(response => console.log(response))                        // Gestion des erreurs
         )
         .catch(response => console.log(response))
   };
-
 });

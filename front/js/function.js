@@ -19,20 +19,21 @@ function majUnCanap(leCanap, indexDataId){
     replaceIdByClass(leClone,'NomProduit','NomProduit');
     leClone.getElementById("CouleurProduit").textContent = `Couleur : ${leCanap.color}`;    // modif de la couleur
     replaceIdByClass(leClone,'CouleurProduit','CouleurProduit');
-    
 
-    //leClone.getElementById("QtyProduit").textContent = `qté : ${leCanap.qty}`;    // modif de la qté
-    // transforme <p> en <label> et lien label
-    //leClone.getElementById("QtyProduit").replace('p','label');
+    let elm = leClone.querySelector('.cart__item__content__settings__quantity');
+    // suppression du <p>
+    let oldElm = leClone.getElementById("QtyProduit");  // selection du noeud <p>
+    //elm.removeChild(oldElm);
 
-    let elm= leClone.getElementById("QtyProduit");
-    console.log(elm.tagName);
-    
-    elm.innerHTML = `<label class="QtyProduit" for="itemQuantity${indexDataId}">qté : ${leCanap.qty}</label>`;
+    // ajout du <label>
+    let lab = document.createElement("label");
+    lab.setAttribute("class","QtyProduit");
+    lab.setAttribute("for",`itemQuantity${indexDataId}`);
+    lab.textContent = `Qté : ${leCanap.qty}`;
+    elm.appendChild(lab);
+
+    elm.replaceChild(lab, oldElm);
     console.log(elm);
-    //node.parentNode.removeChild(node);
-    // a faire ici --------------------------------------------
-    //replaceIdByClass(leClone,'QtyProduit','QtyProduit');
 
     leClone.getElementById("PrixProduit").textContent = `Prix : ${leCanap.price} €`;    // modif du prix
     replaceIdByClass(leClone,'PrixProduit','PrixProduit');
@@ -40,7 +41,6 @@ function majUnCanap(leCanap, indexDataId){
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
     leClone.getElementById("QtyProduitInput").setAttribute("name",`itemQuantity${indexDataId}`);  // ajout du label ds input
     leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
-    //-------------------------------------------------------------
     // Ajout identification de l'article complet
     leClone.querySelector('.cart__item').setAttribute("data-id",`${indexDataId}`);
     // Ajout identification du bouton supprimer ( de 0 a xxx)
