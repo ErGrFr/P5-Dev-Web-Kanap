@@ -39,8 +39,8 @@ function majUnCanap(leCanap, indexDataId){
     replaceIdByClass(leClone,'PrixProduit','PrixProduit');
 
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
-    leClone.getElementById("QtyProduitInput").setAttribute("name",`itemQuantity${indexDataId}`);  // ajout du label ds input
-    leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
+    leClone.getElementById("QtyProduitInput").setAttribute("id",`itemQuantity${indexDataId}`);  // ajout du label ds input
+    //leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
     // Ajout identification de l'article complet
     leClone.querySelector('.cart__item').setAttribute("data-id",`${indexDataId}`);
     // Ajout identification du bouton supprimer ( de 0 a xxx)
