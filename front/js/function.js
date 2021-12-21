@@ -33,7 +33,6 @@ function majUnCanap(leCanap, indexDataId){
     elm.appendChild(lab);
 
     elm.replaceChild(lab, oldElm);
-    console.log(elm);
 
     leClone.getElementById("PrixProduit").textContent = `Prix : ${leCanap.price} €`;    // modif du prix
     replaceIdByClass(leClone,'PrixProduit','PrixProduit');
@@ -82,7 +81,7 @@ function deleteCanap(indexPanier){
 
 // modification de la qty ds le localstorage
 function modificationQty(indexPanier, newQty){
-    console.log("modifQty "+indexPanier+ " " + newQty);
+    //console.log("modifQty "+indexPanier+ " " + newQty);
     let lesCanaps = lectureLocalstorage();// lecture du localstorage
     lesCanaps[indexPanier].qty = newQty;  // modification de la qty
     sauvegardeDansLocalstorage(lesCanaps); // sauvegarde du panier
@@ -113,6 +112,44 @@ function majInfosTotalPanier(){
     document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
     document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
   }
+
+
+// function MajContactValid(contact,state){
+//     contact = state;
+// }
+
+function verifChiffreFormulaire(id){
+    // selection du formulaire
+    let leFormulaire = document.querySelector(`#${id}`);
+    leFormulaire.addEventListener("change",function() {
+        if(leFormulaire.value.match(/[0-9]/)){
+            document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , ne pas saisir de chiffres svp. ";
+            contactValide[`${id}`] = false;
+            console.log(contactValide);
+    
+        }else{
+            document.getElementById(`${id}ErrorMsg`).innerText = ""  // si la saisie est correct, on efface un eventuel message d'erreur
+            contactValide[`${id}`] = true;
+            console.log(contactValide);
+        
+        }
+        
+    })
+    
+}
+
+function verifArobasFormulaire(id){
+    // selection du formulaire
+    let leFormulaire = document.querySelector(`#${id}`);
+    leFormulaire.addEventListener("change",function() {
+        if(leFormulaire.value.match("@")){
+            document.getElementById(`${id}ErrorMsg`).innerText = "";
+            contactValide.id = true;
+        }else{
+            document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , il faut un Email valide ( @ ) svp."  // si la saisie est correct, on efface un eventuel message d'erreur
+        }
+    })
+}
 
   //-------------------------------- localstorage -------------------------------------------------
   function lectureLocalstorage(){

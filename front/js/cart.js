@@ -54,30 +54,45 @@ for(unQtyInput of lesQtyInput){
 };
 let lesProducts = ['']; //<-- array of product _id
 
+// regroupe les informartions de valididees de chaque champ
+let contactValide = {
+  firstName: false,
+  lastName: false,
+  adress: true,
+  city: false,
+  email: false
+}
+
+// a chaque saisie on verifie si pas de chiffre
+verifChiffreFormulaire('firstName');
+verifChiffreFormulaire('lastName');
+verifChiffreFormulaire('city');
+verifArobasFormulaire('email');
 
 
 // ecoute du bouton commander
 document.getElementById("order").addEventListener("click" , function(commander){
 
   // verification des champs contact
-  let saisieFormulaire = true;  // vrai par defaut
+  //let saisieFormulaire = true;  // vrai par defaut
 
-  contact.firstName = document.getElementById("firstName").value;
-  if(contact.firstName.match(/[0-9]/)){
-    //console.log("Chiffre detecté");
-    document.getElementById("firstNameErrorMsg").innerText = "Erreur , ne pas saisir de chiffres svp. "
-    saisieFormulaire = false;
-  }
-  contact.lastName = document.getElementById("lastName").value;
-  if(contact.lastName.match(/[0-9]/)){
-    //console.log("Chiffre detecté");
-    document.getElementById("lastNameErrorMsg").innerText = "Erreur , ne pas saisir de chiffres svp. "
-    saisieFormulaire = false;
-  }
+  // contact.firstName = document.getElementById("firstName").value;
+  // if(contact.firstName.match(/[0-9]/)){
+  //   //console.log("Chiffre detecté");
+  //   document.getElementById("firstNameErrorMsg").innerText = "Erreur , ne pas saisir de chiffres svp. "
+  //   saisieFormulaire = false;
+  // }
+  // contact.lastName = document.getElementById("lastName").value;
+  // if(contact.lastName.match(/[0-9]/)){
+  //   //console.log("Chiffre detecté");
+  //   document.getElementById("lastNameErrorMsg").innerText = "Erreur , ne pas saisir de chiffres svp. "
+  //   saisieFormulaire = false;
+  // }
 
-  //console.log(contact);
+  //console.log(contactValide);
  
-  if (saisieFormulaire === true){  // si tous les champs formulaire sont ok
+  if (contactValide.firstName && contactValide.lastName && contactValide.adress && contactValide.city && contactValide.email){  // si tous les champs formulaire sont ok
+    console.log(contactValide);
       // soumission de la commande au serveur
       let url = "http://localhost:3000/api/order/"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
       fetch(url,{
