@@ -144,9 +144,12 @@ function verifArobasFormulaire(id){
     leFormulaire.addEventListener("change",function() {
         if(leFormulaire.value.match("@")){
             document.getElementById(`${id}ErrorMsg`).innerText = "";
-            contactValide.id = true;
+            contactValide[`${id}`] = true;
+            console.log(contactValide);
         }else{
             document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , il faut un Email valide ( @ ) svp."  // si la saisie est correct, on efface un eventuel message d'erreur
+            contactValide[`${id}`] = false;
+            console.log(contactValide);
         }
     })
 }
@@ -158,5 +161,14 @@ function verifArobasFormulaire(id){
 
   function sauvegardeDansLocalstorage(element){
     localStorage.setItem('selectionCanap',JSON.stringify(element));  // ecriture ds localstorage
+  }
+
+  function ListeIdLocalstorage(){  // renvoi la liste des id du panier ( localstorage )
+    let listeId;
+    lePanier = lectureLocalstorage();
+    for(unCanap of lePanier){
+        listeId += unCanap.id; 
+    }
+    return listeId;
   }
 

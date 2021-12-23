@@ -52,7 +52,7 @@ for(unQtyInput of lesQtyInput){
   city : '',
   email: ''
 };
-let lesProducts = ['']; //<-- array of product _id
+let products = ['']; //<-- array of product _id
 
 // regroupe les informartions de valididees de chaque champ
 let contactValide = {
@@ -68,41 +68,25 @@ verifChiffreFormulaire('firstName');
 verifChiffreFormulaire('lastName');
 verifChiffreFormulaire('city');
 verifArobasFormulaire('email');
-
+console.log("avant click");
 
 // ecoute du bouton commander
 document.getElementById("order").addEventListener("click" , function(commander){
 
-  // verification des champs contact
-  //let saisieFormulaire = true;  // vrai par defaut
-
-  // contact.firstName = document.getElementById("firstName").value;
-  // if(contact.firstName.match(/[0-9]/)){
-  //   //console.log("Chiffre detecté");
-  //   document.getElementById("firstNameErrorMsg").innerText = "Erreur , ne pas saisir de chiffres svp. "
-  //   saisieFormulaire = false;
-  // }
-  // contact.lastName = document.getElementById("lastName").value;
-  // if(contact.lastName.match(/[0-9]/)){
-  //   //console.log("Chiffre detecté");
-  //   document.getElementById("lastNameErrorMsg").innerText = "Erreur , ne pas saisir de chiffres svp. "
-  //   saisieFormulaire = false;
-  // }
-
+  // si tous les champs sont true , alors on envoi la cmd au serveur
   //console.log(contactValide);
- 
+  console.log("click")
   if (contactValide.firstName && contactValide.lastName && contactValide.adress && contactValide.city && contactValide.email){  // si tous les champs formulaire sont ok
-    console.log(contactValide);
+    //console.log(contactValide) + "1";
+    console.log("condition true")
+    products = ListeIdLocalstorage(); //<-- array of product _id
       // soumission de la commande au serveur
       let url = "http://localhost:3000/api/order/"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
-      fetch(url,{
+      let cmd = fetch(url,{
         //-------------------------- datas pour le serveur ------------
         method : 'POST',
-        //headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(contact),
-        //body: contact,lesProducts   // FormData
-        product: JSON.stringify(lesProducts)
-        //--------------------------------------------------------------
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({contact},{products})
         })
         .then(response => response.json() // promesse réponse serveur
               .then((maCommande) => {            // promesse datas JSON
@@ -114,5 +98,7 @@ document.getElementById("order").addEventListener("click" , function(commander){
               .catch(response => console.log(response))                        // Gestion des erreurs
         )
         .catch(response => console.log(response))
+  }else{
+    console.log("condition false")
   };
 });

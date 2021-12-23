@@ -58,11 +58,24 @@ document.getElementById('addToCart').addEventListener("click" , function(){
             //localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
             sauvegardeDansLocalstorage(maSelectionCanaps);
         }
-        
+        // alert utilisateur que la selection a été ajouté au panier
+        // DOM item__content
+        let elm = document.querySelector('.item__content');
+        //<div class="alert alert-success" role="alert">votre séléction a été ajouté au panier</div>
+        // ajout du <label>
+        let alert = document.createElement("div");
+        alert.setAttribute("class","alert alert-success");
+        alert.setAttribute("role","alert");
+        alert.textContent = "votre séléction a été ajouté au panier";
+        elm.appendChild(alert);
+        // retour a la page principale 
+        //------
+    
     }
 });
-
+//-----------------------------------------------------------------------------------------------
 //------------------------ récuperation de l'id du canapé dans l'url ----------------------------
+//-----------------------------------------------------------------------------------------------
 let urlID = location.search.substring().split("=") // urlID[1] : id uniquement
 //console.log(urlID[1])
 
