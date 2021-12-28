@@ -38,8 +38,6 @@ for(unQtyInput of lesQtyInput){
   });
 };
 
-
-
 //-------------------------------------------------------------
 //----------------------- commande ----------------------------
 //-------------------------------------------------------------
@@ -64,47 +62,47 @@ let contactValide = {
 }
 
 // a chaque saisie on verifie si pas de chiffre
-verifChiffreFormulaire('firstName');
-verifChiffreFormulaire('lastName');
-verifChiffreFormulaire('city');
-verifArobasFormulaire('email');
-console.log("avant click");
+contact.firstName = verifChiffreFormulaire('firstName');
+contact.lastName = verifChiffreFormulaire('lastName');
+contact.city = verifChiffreFormulaire('city');
+contact.address = 'ici';
+contact.email = verifArobasFormulaire('email');
+console.log(contact);
+
 
 // ecoute du bouton commander
 document.getElementById("order").addEventListener("click" , function(commander){
 
   // si tous les champs sont true , alors on envoi la cmd au serveur
   //console.log(contactValide);
-  console.log("click")
+  //console.log("click")
   if (contactValide.firstName && contactValide.lastName && contactValide.adress && contactValide.city && contactValide.email){  // si tous les champs formulaire sont ok
     //console.log(contactValide) + "1";
-    console.log("condition true")
+    //console.log("condition true")
     products = ListeIdLocalstorage(); //<-- array of product _id
-
+    //console.log(products);
       // soumission de la commande au serveur
-      //"http://localhost:3000/api/products" 
       let url = "http://localhost:3000/api/products/order"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
       let cmd = fetch(url,{
         //-------------------------- datas pour le serveur ------------
         method : 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-
           contact : contact,
           products : products
         })
         })
         .then(response => response.json() // promesse réponse serveur
-              .then((maCommande) => {   
-                         // promesse datas JSON
-                console.log(maCommande);
+              .then((maCommande) => {     // promesse datas JSON
+                console.log(maCommande.orderId);
                 //MajInfosCanap(LeCanap);     // Maj infos du canap
 
-        
               })
               .catch(response => console.log(response))   // Gestion des erreurs
+        
         )
         .catch(response => console.log(response))
+        //console.log(cmd.orderId);
   }else{
     console.log("condition false")
   };
