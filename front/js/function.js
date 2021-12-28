@@ -111,6 +111,13 @@ function majInfosTotalPanier(){
     // affichage du prix total du panier et qty total du panier ( le cumul se fait ds la boucle de lecture du localstorage )
     document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
     document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
+    // information que le panier est vide
+    console.log(panierTotal.qtyTotal+panierTotal.prixTotal);
+    if(panierTotal.qtyTotal == 0 && panierTotal.prixTotal == 0){
+        let elm = document.querySelector("#cartAndFormContainer h1").innerText = "Votre Panier est vide !";
+        console.log(elm);
+    }
+
   }
 
 

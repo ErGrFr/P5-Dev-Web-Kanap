@@ -3,10 +3,13 @@
 //-------- affichage du panier ( sauvegardé ds localstorage )--------------------
 //-----------------------------------------------------------------------------
 let lesCanaps = lectureLocalstorage(); // lecture du localstorage
-for(i=0;i<lesCanaps.length;i++){  // l'index i permet aussi d'identifier chaque bouton suppression et input qty
+if(lesCanaps != undefined){
+  for(i=0;i<lesCanaps.length;i++){  // l'index i permet aussi d'identifier chaque bouton suppression et input qty
     majUnCanap(lesCanaps[i], i);
   };
-majInfosTotalPanier();
+  majInfosTotalPanier();
+}
+
 
 //---------------------------------------------------------------------
 // -----------------  boutons supprimer --------------------------------
@@ -50,7 +53,7 @@ for(unQtyInput of lesQtyInput){
   city : '',
   email: ''
 };
-let products = ['']; //<-- array of product _id
+let products = []; // tableau de product _id
 
 // regroupe les informartions de valididees de chaque champ
 let contactValide = {
@@ -74,8 +77,8 @@ console.log(contact);
 document.getElementById("order").addEventListener("click" , function(commander){
 
   // si tous les champs sont true , alors on envoi la cmd au serveur
-  //console.log(contactValide);
-  //console.log("click")
+  console.log(contactValide);
+  console.log("click")
   if (contactValide.firstName && contactValide.lastName && contactValide.adress && contactValide.city && contactValide.email){  // si tous les champs formulaire sont ok
     //console.log(contactValide) + "1";
     //console.log("condition true")
@@ -94,7 +97,10 @@ document.getElementById("order").addEventListener("click" , function(commander){
         })
         .then(response => response.json() // promesse réponse serveur
               .then((maCommande) => {     // promesse datas JSON
-                console.log(maCommande.orderId);
+                // clear panier
+                localStorage.clear();
+                // url vers confirmation
+                window.location.href = "./confirmation.html?orderId="+maCommande.orderId
                 //MajInfosCanap(LeCanap);     // Maj infos du canap
 
               })
