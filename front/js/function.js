@@ -125,13 +125,13 @@ function verifChiffreFormulaire(id){
         if(leFormulaire.value.match(/[0-9]/)){
             document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , ne pas saisir de chiffres svp. ";
             contactValide[`${id}`] = false;
-            console.log(contactValide);
+            
     
         }else{
             document.getElementById(`${id}ErrorMsg`).innerText = ""  // si la saisie est correct, on efface un eventuel message d'erreur
             contactValide[`${id}`] = true;
-            console.log(contactValide);
-        
+            contact[`${id}`] = leFormulaire.value;
+            
         }
         
     })
@@ -145,11 +145,12 @@ function verifArobasFormulaire(id){
         if(leFormulaire.value.match("@")){
             document.getElementById(`${id}ErrorMsg`).innerText = "";
             contactValide[`${id}`] = true;
-            console.log(contactValide);
+            contact[`${id}`] = leFormulaire.value;
+            
         }else{
             document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , il faut un Email valide ( @ ) svp."  // si la saisie est correct, on efface un eventuel message d'erreur
             contactValide[`${id}`] = false;
-            console.log(contactValide);
+            
         }
     })
 }
@@ -164,11 +165,13 @@ function verifArobasFormulaire(id){
   }
 
   function ListeIdLocalstorage(){  // renvoi la liste des id du panier ( localstorage )
-    let listeId;
+    let listeId = [];
     lePanier = lectureLocalstorage();
     for(unCanap of lePanier){
-        listeId += unCanap.id; 
+        //listeId += unCanap.id; 
+        listeId.push(unCanap.id);
     }
+    //console.log(listeId)
     return listeId;
   }
 
