@@ -80,25 +80,33 @@ document.getElementById("order").addEventListener("click" , function(commander){
     //console.log(contactValide) + "1";
     console.log("condition true")
     products = ListeIdLocalstorage(); //<-- array of product _id
+
       // soumission de la commande au serveur
-      let url = "http://localhost:3000/api/order/"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
+      //"http://localhost:3000/api/products" 
+      let url = "http://localhost:3000/api/products/order"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
       let cmd = fetch(url,{
         //-------------------------- datas pour le serveur ------------
         method : 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({contact},{products})
+        body: JSON.stringify({
+
+          contact : contact,
+          products : products
+        })
         })
         .then(response => response.json() // promesse réponse serveur
-              .then((maCommande) => {            // promesse datas JSON
+              .then((maCommande) => {   
+                         // promesse datas JSON
                 console.log(maCommande);
                 //MajInfosCanap(LeCanap);     // Maj infos du canap
 
         
               })
-              .catch(response => console.log(response))                        // Gestion des erreurs
+              .catch(response => console.log(response))   // Gestion des erreurs
         )
         .catch(response => console.log(response))
   }else{
     console.log("condition false")
   };
+  
 });
