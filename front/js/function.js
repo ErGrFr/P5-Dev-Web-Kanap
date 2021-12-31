@@ -106,7 +106,7 @@ function majInfosTotalPanier(){
     prixTotal: 0,
     qtyTotal:0,
     }
-    console.log(panierTotal);
+    //console.log(panierTotal);
     let lesCanaps = lectureLocalstorage();
     if (lesCanaps != undefined){
         for(unCanap of lesCanaps){
@@ -122,7 +122,7 @@ function majInfosTotalPanier(){
 
     if(panierTotal.qtyTotal == 0 && panierTotal.prixTotal == 0){
         let elm = document.querySelector("#cartAndFormContainer h1").innerText = "Votre Panier est vide !";
-        console.log(elm);
+        //console.log(elm);
     }
 
   }

@@ -8,6 +8,8 @@ if(lesCanaps != undefined){
     majUnCanap(lesCanaps[i], i);
   };
   majInfosTotalPanier();
+}else{
+  console.log("panier vide");
 }
 
 
@@ -84,14 +86,11 @@ console.log(contact);
 // ecoute du bouton commander
 document.getElementById("order").addEventListener("click" , function(commander){
 
-  // si tous les champs sont true , alors on envoi la cmd au serveur
-  console.log(contactValide);
-  console.log("click")
-  if (contactValide.firstName && contactValide.lastName && contactValide.adress && contactValide.city && contactValide.email){  // si tous les champs formulaire sont ok
-    //console.log(contactValide) + "1";
-    //console.log("condition true")
-    products = ListeIdLocalstorage(); //<-- array of product _id
-    //console.log(products);
+  
+  products = ListeIdLocalstorage(); //<-- array of product _id
+  // si tous les champs sont true et panier non vide, alors on envoi la cmd au serveur
+  if (contactValide.firstName && contactValide.lastName && contactValide.adress && contactValide.city && contactValide.email && products.length != 0){  
+    
       // soumission de la commande au serveur
       let url = "http://localhost:3000/api/products/order"; //+contact+products; //+ JSON.stringify(contact) + JSON.stringify(products); // requete API
       let cmd = fetch(url,{
@@ -118,7 +117,7 @@ document.getElementById("order").addEventListener("click" , function(commander){
         .catch(response => console.log(response))
         //console.log(cmd.orderId);
   }else{
-    console.log("condition false")
+    console.log("panier vide")
   };
   
 });
