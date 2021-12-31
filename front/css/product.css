@@ -2,6 +2,10 @@
 /*Product*/
 /*********/
 
+.hide {
+	display: none;
+}
+
 /*Item Details*/
 .item {
 	margin: 135px 0;
@@ -14,6 +18,9 @@
 	align-items: center;
 	width: 50%;
 }
+
+
+
 .item__img {
 	width: 100%;
 }

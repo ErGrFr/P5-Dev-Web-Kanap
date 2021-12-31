@@ -1,5 +1,4 @@
-//console.log('fichier product.js')
-//localStorage.clear();
+
  let clef = localStorage.getItem('selectionCanap'); // lecture de la clef de stockage
 console.log(clef);
 
@@ -30,13 +29,12 @@ document.getElementById('addToCart').addEventListener("click" , function(){
         infosCart.id = urlID[1];           // ajout id du canap
         infosCart.qty = infoQty.value;     // ajout qty
         infosCart.color = infoColor.value;    // ajout color
-        //console.log(infoColor.value);
 
-        //console.log(maSelectionCanaps);
         // lecture/ recup des datas sauvegardés ds localstorage
         if(localStorage.getItem('selectionCanap') != null){  // si localstorage n'est pas vide
             // on transforme le contenu 'chaine'( JSON) en 'objet'(JS)
-            maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
+            //maSelectionCanaps = JSON.parse(localStorage.getItem('selectionCanap'));
+            maSelectionCanaps = lectureLocalstorage();
             //maSelectionCanaps = sauvegardeDansLocalstorage();
         }
         // modification du panier
@@ -44,18 +42,14 @@ document.getElementById('addToCart').addEventListener("click" , function(){
         if ( index == null){    // si l'id n'existe pas on l'ajoute
             // maj de la selection
             maSelectionCanaps.push(infosCart);
-            console.log(maSelectionCanaps);
             // sauvegarde du panier ds le local storage ( on transforme l'objet JS en chaine JSON)
-            //let monCart = localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
             sauvegardeDansLocalstorage(maSelectionCanaps);
         }else{  
             //let QtySav =  maSelectionCanaps[index].qty;
             let QtySav = parseInt(maSelectionCanaps[index].qty);   // si l'id existe deja on update la qty
             QtySav = QtySav + parseInt(infosCart.qty);
             maSelectionCanaps[index].qty = QtySav;
-            //console.log(maSelectionCanaps);
             // sauvegarde du panier ds le local storage
-            //localStorage.setItem('selectionCanap',JSON.stringify(maSelectionCanaps));
             sauvegardeDansLocalstorage(maSelectionCanaps);
         }
         // alert utilisateur que la selection a été ajouté au panier
@@ -133,7 +127,18 @@ fetch(url)
     })
     .catch()                        // Gestion des erreurs
     )
-.catch(response => console.log(response))
+.catch((erreurCanap)=>{
+    // ajout class hide , pour masquer l'article
+    document.querySelector('.item__img').setAttribute("class","hide");
+    document.querySelector('.item__content__addButton').setAttribute("class","hide");
+    document.querySelector('.item__content__description').setAttribute("class","hide");
+    document.querySelector('.item__content__settings').setAttribute("class","hide");
+    document.querySelector('#prix').setAttribute("class","hide");
+    //document.getElementsById('price').setAttribute("class","hide");
+    // ajout message d'erreur
+    document.getElementById('title').innerHTML = `<p>Article inconnu</p>`;
+})
 
+//response => console.log(response)
 
 

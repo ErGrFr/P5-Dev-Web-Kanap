@@ -113,6 +113,7 @@ h2 {
 .cart__order__form__question input:focus {
 	outline: none;
 }
+
 .cart__order__form__question p {
 	margin: 0;
 	color: #fbbcbc;

@@ -21,9 +21,9 @@ function majUnCanap(leCanap, indexDataId){
     replaceIdByClass(leClone,'CouleurProduit','CouleurProduit');
 
     let elm = leClone.querySelector('.cart__item__content__settings__quantity');
-    // suppression du <p>
+
     let oldElm = leClone.getElementById("QtyProduit");  // selection du noeud <p>
-    //elm.removeChild(oldElm);
+
 
     // ajout du <label>
     let lab = document.createElement("label");
@@ -39,7 +39,7 @@ function majUnCanap(leCanap, indexDataId){
 
     leClone.getElementById("QtyProduitInput").setAttribute("value",`${leCanap.qty}`); // modif qty ds le input
     leClone.getElementById("QtyProduitInput").setAttribute("id",`itemQuantity${indexDataId}`);  // ajout du label ds input
-    //leClone.getElementById("QtyProduitInput").removeAttribute("id"); // suppression simple de l'Id, il existe deja la class=itemQty
+
     // Ajout identification de l'article complet
     leClone.querySelector('.cart__item').setAttribute("data-id",`${indexDataId}`);
     // Ajout identification du bouton supprimer ( de 0 a xxx)
@@ -97,6 +97,10 @@ function modificationQty(indexPanier, newQty){
   }
 
 function majInfosTotalPanier(){
+//-----------------------------------------------------------------------------
+// cette fonction lit les infos du panier localstorage 
+// et fait les cumuls 
+//------------------------------------------------------------------------------
     // Total panier
     let panierTotal = {
     prixTotal: 0,
@@ -104,15 +108,18 @@ function majInfosTotalPanier(){
     }
 
     let lesCanaps = lectureLocalstorage();
-    for(unCanap of lesCanaps){
-        panierTotal.qtyTotal = parseInt(`${unCanap.qty}`);   // pas de cumul sur la qty
-        panierTotal.prixTotal += parseInt(`${unCanap.price}`) * panierTotal.qtyTotal;
+    if (lesCanaps != undefined){
+        for(unCanap of lesCanaps){
+            panierTotal.qtyTotal = parseInt(`${unCanap.qty}`);   // pas de cumul sur la qty
+            panierTotal.prixTotal += parseInt(`${unCanap.price}`) * panierTotal.qtyTotal;
+        }
     }
+    
     // affichage du prix total du panier et qty total du panier ( le cumul se fait ds la boucle de lecture du localstorage )
     document.getElementById('totalQuantity').innerText = panierTotal.qtyTotal;
     document.getElementById('totalPrice').innerText = panierTotal.prixTotal;
     // information que le panier est vide
-    console.log(panierTotal.qtyTotal+panierTotal.prixTotal);
+
     if(panierTotal.qtyTotal == 0 && panierTotal.prixTotal == 0){
         let elm = document.querySelector("#cartAndFormContainer h1").innerText = "Votre Panier est vide !";
         console.log(elm);
@@ -121,24 +128,25 @@ function majInfosTotalPanier(){
   }
 
 
-// function MajContactValid(contact,state){
-//     contact = state;
-// }
-
 function verifChiffreFormulaire(id){
-    // selection du formulaire
-    let leFormulaire = document.querySelector(`#${id}`);
-    leFormulaire.addEventListener("change",function() {
-        if(leFormulaire.value.match(/[0-9]/)){
-            document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , ne pas saisir de chiffres svp. ";
-            contactValide[`${id}`] = false;
-            
+//-----------------------------------------------------------------------------
+// cette fonction verifie la presence d'un chiffre lors de la saisie de données
+// et affiche un message d'erreur en dessous du champ
+//------------------------------------------------------------------------------
     
+    let leFormulaire = document.querySelector(`#${id}`);    // selection du formulaire
+    leFormulaire.addEventListener("change",function() {     // ecoute sur modification du champ
+        if(leFormulaire.value.match(/[0-9]/)){              // test chiffres regex
+            document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , ne pas saisir de chiffres svp. ";
+            contactValide[`${id}`] = false;                 // la saisie est invalide
         }else{
             document.getElementById(`${id}ErrorMsg`).innerText = ""  // si la saisie est correct, on efface un eventuel message d'erreur
-            contactValide[`${id}`] = true;
-            contact[`${id}`] = leFormulaire.value;
-            
+            contactValide[`${id}`] = true;                  // la saisie est valide
+            contact[`${id}`] = leFormulaire.value;          // maj de la saisie
+        }
+        if(leFormulaire.value.length == 0){     // si le champ de saisie est vide
+            document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , ce champ est obligatoire. ";
+            contactValide[`${id}`] = false;     // la saisie est invalide
         }
         
     })
@@ -146,23 +154,31 @@ function verifChiffreFormulaire(id){
 }
 
 function verifArobasFormulaire(id){
-    // selection du formulaire
-    let leFormulaire = document.querySelector(`#${id}`);
-    leFormulaire.addEventListener("change",function() {
-        if(leFormulaire.value.match("@")){
+//-----------------------------------------------------------------------------
+// cette fonction verifie la presence d'une arrobas lors de la saisie de données
+// et affiche un message d'erreur en dessous du champ email
+// remarque : si la champ est vide , il n'y a pas d'arobas
+//------------------------------------------------------------------------------
+    
+    let leFormulaire = document.querySelector(`#${id}`);    // selection du formulaire
+    leFormulaire.addEventListener("change",function() {     // ecoute sur modification du champ
+        if(leFormulaire.value.match("@")){                  // test arobas regex
             document.getElementById(`${id}ErrorMsg`).innerText = "";
-            contactValide[`${id}`] = true;
-            contact[`${id}`] = leFormulaire.value;
+            contactValide[`${id}`] = true;                  // la saisie est valide
+            contact[`${id}`] = leFormulaire.value;          // maj de la saisie
             
         }else{
             document.getElementById(`${id}ErrorMsg`).innerText = "Erreur , il faut un Email valide ( @ ) svp."  // si la saisie est correct, on efface un eventuel message d'erreur
-            contactValide[`${id}`] = false;
+            contactValide[`${id}`] = false;         // la saisie est invalide
             
         }
     })
 }
 
   //-------------------------------- localstorage -------------------------------------------------
+
+
+
   function lectureLocalstorage(){
       return JSON.parse(localStorage.getItem('selectionCanap')); // lecture ds localstorage
   }
