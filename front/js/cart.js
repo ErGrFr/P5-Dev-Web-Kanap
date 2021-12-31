@@ -36,8 +36,16 @@ let lesQtyInput = document.querySelectorAll('.itemQuantity');
 // ecoute de chaque input
 for(unQtyInput of lesQtyInput){
   unQtyInput.addEventListener("change" , function(eventModificationQty){  // event sur changement de valeur
+  
+  let qty =eventModificationQty.target.value;
+  console.log(qty);
+  // controle saisie ( pas de 0 et lettres)
+  if (qty == 0){     // on farce a 1 la qty
+    qty = 1;
+    eventModificationQty.target.value = 1; 
+  }
   // modification de la qty sur l'article du panier
-  modificationQty(eventModificationQty.target.getAttribute('data-id'),eventModificationQty.target.value);
+  modificationQty(eventModificationQty.target.getAttribute('data-id'),qty);
   });
 };
 

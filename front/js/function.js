@@ -106,12 +106,12 @@ function majInfosTotalPanier(){
     prixTotal: 0,
     qtyTotal:0,
     }
-
+    console.log(panierTotal);
     let lesCanaps = lectureLocalstorage();
     if (lesCanaps != undefined){
         for(unCanap of lesCanaps){
-            panierTotal.qtyTotal = parseInt(`${unCanap.qty}`);   // pas de cumul sur la qty
-            panierTotal.prixTotal += parseInt(`${unCanap.price}`) * panierTotal.qtyTotal;
+            panierTotal.qtyTotal += parseInt(`${unCanap.qty}`);   // pas de cumul sur la qty
+            panierTotal.prixTotal += parseInt(`${unCanap.price}`) * parseInt(`${unCanap.qty}`);
         }
     }
     
