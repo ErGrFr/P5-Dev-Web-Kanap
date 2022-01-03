@@ -15,19 +15,12 @@ fetch(url)
 .then(response =>             // promesse réponse serveur
     response.json()
     .then((lesCanaps) => {                  // promesse datas JSON
-        //console.log(lesCanaps);           
+        console.log(lesCanaps);           
         
         for (const unCanap of lesCanaps) {  // pour chaque element de la liste
-            console.log(unCanap._id);
-            // recuperation du template
-            //let template = document.querySelector("#un-item");
-            //console.log(template);
-            // position parent
-            //let items = document.querySelector("#items");
-            //console.log(items);
+            //console.log(unCanap._id);
+            
 
-            // clonage
-            //let clone = document.importNode(template.textContent, true);
             // mise en forme de l'article
             let articleHTML = `
             <a href="./product.html?id=${unCanap._id}">
@@ -38,7 +31,7 @@ fetch(url)
                 </article>
             </a>`;
             // ajout enfant
-            //items.appendChild(articleHTML);
+            //parentItems.appendChild(leClone);
             document.getElementById('items').innerHTML += articleHTML; // ajoute chaque article ds le doc HTML
         }
         
