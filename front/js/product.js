@@ -79,11 +79,16 @@ let urlID = location.search.substring().split("=") // urlID[1] : id uniquement
 function MajInfosCanap (UnCanap){
     if (UnCanap !== undefined) {    // verification si pas d'informations
         // Maj de l'image
-        document.querySelector('.item__img').innerHTML = `<img src="${UnCanap.imageUrl}" alt="${UnCanap.altTxt}">`;
+        let monImg = document.querySelector('.item__img')
+        let newElm = document.createElement("img");
+        newElm.setAttribute("src",`${UnCanap.imageUrl}`);
+        newElm.setAttribute("alt",`${UnCanap.altTxt}`);
+        monImg.appendChild(newElm);
+    
         infosCart.img = UnCanap.imageUrl;
         infosCart.imgalt = UnCanap.altTxt;
         // Maj du titre
-        document.getElementById('title').innerHTML = `<p>${UnCanap.name}</p>`;
+        document.getElementById('title').innerHTML = `${UnCanap.name}`; 
         infosCart.name = UnCanap.name;
         // MAj du prix
         document.getElementById('price').innerHTML =  `${UnCanap.price} `;
@@ -92,7 +97,11 @@ function MajInfosCanap (UnCanap){
         document.getElementById('description').innerHTML =  `${UnCanap.description} `;
         // Maj de la liste des couleurs
         for (const UneCouleur of UnCanap.colors) {
-            document.getElementById('colors').innerHTML +=  `<option value="${UneCouleur}">${UneCouleur}</option>`;
+            monImg = document.querySelector('#colors')
+            newElm = document.createElement("option");
+            newElm.setAttribute("value",`${UneCouleur}`);
+            newElm.innerHTML = `${UneCouleur}`;
+            monImg.appendChild(newElm);
         }
     }
 };
@@ -127,16 +136,16 @@ fetch(url)
     })
     .catch()                        // Gestion des erreurs
     )
-.catch((erreurCanap)=>{
+.catch(()=>{
     // ajout class hide , pour masquer l'article
     document.querySelector('.item__img').setAttribute("class","hide");
     document.querySelector('.item__content__addButton').setAttribute("class","hide");
     document.querySelector('.item__content__description').setAttribute("class","hide");
     document.querySelector('.item__content__settings').setAttribute("class","hide");
     document.querySelector('#prix').setAttribute("class","hide");
-    //document.getElementsById('price').setAttribute("class","hide");
+
     // ajout message d'erreur
-    document.getElementById('title').innerHTML = `<p>Article inconnu</p>`;
+    document.getElementById('title').innerText = 'Article inconnu';
 })
 
 //response => console.log(response)

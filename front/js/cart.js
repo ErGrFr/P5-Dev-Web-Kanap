@@ -10,6 +10,7 @@ if(lesCanaps != undefined){
   majInfosTotalPanier();
 }else{
   console.log("panier vide");
+  majInfosTotalPanier();
 }
 
 
@@ -40,7 +41,7 @@ for(unQtyInput of lesQtyInput){
   unQtyInput.addEventListener("change" , function(eventModificationQty){  // event sur changement de valeur
   
   let qty =eventModificationQty.target.value;
-  console.log(qty);
+  //console.log(qty);
   // controle saisie ( pas de 0 et lettres)
   if (qty == 0){     // on farce a 1 la qty
     qty = 1;
@@ -80,7 +81,7 @@ contact.lastName = verifChiffreFormulaire('lastName');
 contact.city = verifChiffreFormulaire('city');
 contact.address = 'ici';
 contact.email = verifArobasFormulaire('email');
-console.log(contact);
+//console.log(contact);
 
 
 // ecoute du bouton commander
@@ -111,13 +112,17 @@ document.getElementById("order").addEventListener("click" , function(commander){
                 //MajInfosCanap(LeCanap);     // Maj infos du canap
 
               })
-              .catch(response => console.log(response))   // Gestion des erreurs
+              .catch()   // Gestion des erreurs  response => console.log(response)
         
         )
-        .catch(response => console.log(response))
-        //console.log(cmd.orderId);
+        .catch((erreur) => {
+          //console.log("erreur");
+          alert("Serveur inacessible")
+        })
+        
   }else{
-    console.log("panier vide")
+    console.log("panier vide ou formulaire incomplet");
+    alert("Panier vide ou formulaire incomplet");
   };
   
 });
